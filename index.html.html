@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jak se dostat dál – orientace v Evropě</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF1F3;--card:#fff;--ink:#12212C;--mute:#566772;--rail:#0B4F6C;--on:#fff;--sign:#FFC20E;--bd:#CBD6DC;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1820;--card:#15242E;--ink:#E7EEF2;--mute:#9BAAB4;--rail:#6DBBDD;--on:#08202B;--bd:#2A3D49}}
+:root[data-theme="dark"]{--bg:#0D1820;--card:#15242E;--ink:#E7EEF2;--mute:#9BAAB4;--rail:#6DBBDD;--on:#08202B;--bd:#2A3D49}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Barlow,"Helvetica Neue",Arial,sans-serif}
+.wrap{max-width:640px;margin:0 auto;padding:28px 16px 48px}
+h1{font:700 clamp(2.4rem,10vw,3.6rem)/.98 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 10px;letter-spacing:-.01em}
+.lead{margin:0 0 20px;color:var(--mute);max-width:46ch}
+.search{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;display:grid;gap:10px}
+.search label{display:grid;gap:4px;font-weight:600;font-size:.9rem}
+.row{display:grid;grid-template-columns:1fr 44px;gap:10px;align-items:end}
+input{width:100%;height:48px;border:2px solid var(--bd);border-radius:10px;padding:0 12px;font:500 1.1rem Barlow,sans-serif;background:var(--bg);color:var(--ink)}
+button,.btn{font:600 1rem Barlow,sans-serif;cursor:pointer;border-radius:10px;min-height:44px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.swap{width:44px;padding:0;border:2px solid var(--bd);background:var(--card);color:var(--ink);font-size:1.2rem}
+.go{background:var(--rail);color:var(--on);border:0;min-height:50px;font-size:1.1rem}
+:focus-visible{outline:3px solid var(--sign);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.chip{background:transparent;border:1.5px solid var(--bd);color:var(--ink);min-height:36px;padding:0 12px;font-weight:500;border-radius:99px}
+.demo{margin:18px 0 0;font-size:.85rem;color:var(--mute);border-left:4px solid var(--sign);padding-left:10px}
+#out{margin-top:26px}
+.sum{font:600 1.3rem "Barlow Condensed",sans-serif;margin:0 0 14px}
+.sum span{font:400 1rem Barlow,sans-serif;color:var(--mute);margin-left:6px}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{position:relative}
+.stn{padding:0 0 0 40px;font:700 1.45rem/1.3 "Barlow Condensed","Arial Narrow",sans-serif}
+.stn::before{content:"";position:absolute;left:5px;top:5px;width:18px;height:18px;border-radius:50%;background:var(--card);border:5px solid var(--ink);z-index:1}
+.leg{padding:12px 0 12px 40px}
+.leg::before{content:"";position:absolute;left:11px;top:-6px;bottom:-6px;width:6px;border-radius:3px;background:var(--c)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.bd{background:var(--c);color:#fff;border-radius:99px;padding:2px 12px;font-weight:600;font-size:.9rem}
+.ln{font-weight:600;margin:8px 0 0}
+.dur{font:700 1.2rem "Barlow Condensed",sans-serif}
+.plat{display:inline-block;margin:10px 0 0;background:var(--sign);color:#1B1500;border-radius:6px;padding:5px 10px;font-weight:600;font-size:.92rem}
+.tip{margin:8px 0 0;color:var(--mute);font-size:.92rem}
+.buy{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{border:2px solid var(--rail);color:var(--rail);background:transparent;min-height:40px;font-size:.95rem}
+.btn:first-child{background:var(--rail);color:var(--on)}
+.none{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}
+.none p{margin:0 0 10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Kam se v Evropě potřebujete dostat?</h1>
+  <p class="lead">Zadejte odkud a kam. Ukážeme vám trasu po úsecích, kde koupit jízdenku a kde hledat nástupiště.</p>
+  <form class="search" id="f" autocomplete="off">
+    <div class="row">
+      <label>Odkud<input id="a" list="c" value="Praha" placeholder="např. Praha"></label>
+      <button type="button" class="swap" id="sw" aria-label="Prohodit odkud a kam">⇅</button>
+    </div>
+    <label>Kam<input id="b" list="c" value="Vídeň" placeholder="např. Vídeň"></label>
+    <button class="go" type="submit">Najít cestu</button>
+    <datalist id="c"><option value="Praha"><option value="Vídeň"><option value="Berlín"><option value="Budapešť"><option value="Mnichov"></datalist>
+  </form>
+  <div class="chips" id="ex"></div>
+  <p class="demo" id="st">Načítám…</p>
+  <div id="out" aria-live="polite"></div>
+  <p class="demo">Data: <a href="https://transitous.org/sources/">Transitous</a>, mapy © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Časy a nástupiště vždy ověřte u dopravce.</p>
+</div>
+<script>
+const M={train:{i:'🚆',n:'Vlak',c:'#0B4F6C'},metro:{i:'🚇',n:'Metro',c:'#A63D8C'},bus:{i:'🚌',n:'Autobus',c:'#2C8A56'},air:{i:'✈️',n:'Letadlo',c:'#C2570C'},walk:{i:'🚶',n:'Pěšky',c:'#6B7C86'}};
+const TAB='oznámí se na tabuli cca 15 min před odjezdem';
+const R={
+'praha-viden':[
+ {m:'train',f:'Praha hl. n.',t:'Wien Hauptbahnhof',ln:'Přímý vlak',min:245,plat:TAB,tip:'Jízdenku kupte předem online, bývá levnější než na nádraží.',buy:[['RegioJet','https://www.regiojet.cz'],['České dráhy','https://www.cd.cz'],['ÖBB','https://www.oebb.at']]},
+ {m:'metro',f:'Wien Hauptbahnhof',t:'Stephansplatz',ln:'Metro U1',min:8,plat:'U1 jede pod nádražím, směr Leopoldau',platR:'U1 jede pod nádražím, směr Oberlaa',tip:'Jízdenka platí na metro, tramvaj i autobus. Kupte ji v automatu nebo v aplikaci.',buy:[['Wiener Linien','https://www.wienerlinien.at']]}],
+'praha-berlin':[
+ {m:'train',f:'Praha hl. n.',t:'Berlin Hauptbahnhof',ln:'Přímý vlak',min:260,plat:TAB,tip:'Na delších linkách se vyplatí rezervace místa.',buy:[['Deutsche Bahn','https://www.bahn.de'],['České dráhy','https://www.cd.cz']]}],
+'viden-budapest':[
+ {m:'train',f:'Wien Hauptbahnhof',t:'Budapest-Keleti',ln:'Přímý vlak',min:160,plat:TAB,tip:'Jízdenku si uložte do telefonu, revizor ji kontroluje ve voze.',buy:[['ÖBB','https://www.oebb.at'],['MÁV','https://www.mavcsoport.hu']]}],
+'praha-mnichov':[
+ {m:'bus',f:'Praha ÚAN Florenc',t:'München ZOB',ln:'Dálkový autobus',min:330,plat:'stanoviště najdete v aplikaci dopravce',tip:'Přijďte aspoň 15 minut předem, nástupiště se na Florenci mění.',buy:[['FlixBus','https://www.flixbus.cz'],['RegioJet','https://www.regiojet.cz']]}]
+};
+const NAME={praha:'Praha',viden:'Vídeň',berlin:'Berlín',budapest:'Budapešť',mnichov:'Mnichov'};
+const ALIAS={praha:'praha',prague:'praha',viden:'viden',wien:'viden',vienna:'viden',berlin:'berlin',budapest:'budapest',budapesst:'budapest',mnichov:'mnichov',munchen:'mnichov',munich:'mnichov'};
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dur=n=>{const h=Math.floor(n/60),m=n%60;return((h?h+' h ':'')+(m?m+' min':'')).trim()};
+const out=document.getElementById('out'),A=document.getElementById('a'),B=document.getElementById('b');
+
+function find(x,y){
+  if(R[x+'-'+y])return R[x+'-'+y];
+  const r=R[y+'-'+x];
+  if(!r)return null;
+  return r.slice().reverse().map(l=>({...l,f:l.t,t:l.f,plat:l.platR||l.plat}));
+}
+function btns(list){return list.map(([n,u])=>`<a class="btn" href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('')}
+const API='https://api.transitous.org';
+const tm=s=>new Date(s).toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
+const kind=m=>/AIR/.test(m)?'air':/BUS|COACH/.test(m)?'bus':/SUBWAY|SUBURBAN|TRAM|METRO/.test(m)?'metro':/WALK/.test(m)?'walk':'train';
+async function jget(u){const r=await fetch(u);if(!r.ok)throw new Error(r.status);return r.json()}
+async function live(a,b){
+  const g=async q=>(await jget(API+'/api/v1/geocode?language=cs&type=STOP&text='+encodeURIComponent(q)))[0];
+  const [p,q]=await Promise.all([g(a),g(b)]);
+  if(!p||!q)return null;
+  const j=await jget(API+'/api/v5/plan?numItineraries=1&fromPlace='+encodeURIComponent(p.id)+'&toPlace='+encodeURIComponent(q.id));
+  const it=j.itineraries&&j.itineraries[0];
+  if(!it)return null;
+  return{name:[p.name,q.name],legs:it.legs.map(l=>{const k=kind(l.mode),w=k==='walk';
+    return{m:k,f:l.from.name,t:l.to.name,
+      ln:w?'Přesun pěšky':tm(l.startTime)+'–'+tm(l.endTime)+' '+(l.displayName||l.routeShortName||l.agencyName||''),
+      min:Math.max(1,Math.round((new Date(l.endTime)-new Date(l.startTime))/60000)),
+      plat:w?'':(l.from.track||'zatím neznámé, ověřte na tabuli'),
+      tip:l.headsign?'Směr '+l.headsign:'',
+      buy:w?[]:[...(l.agencyUrl&&/^https?:/.test(l.agencyUrl)?[[l.agencyName||'Dopravce',l.agencyUrl]]:[]),['Omio','https://www.omio.com']]}})};
+}
+async function go(){
+  const x=ALIAS[norm(A.value)],y=ALIAS[norm(B.value)],st=document.getElementById('st');
+  out.innerHTML='<p class="tip">Hledám spoje…</p>';
+  let r=null;
+  try{r=await live(A.value,B.value);st.textContent=r?'Živá data z Transitous.':''}
+  catch(e){st.textContent='Živá data nejsou dostupná, zobrazuji ukázková data.';
+    const d=x&&y&&x!==y?find(x,y):null;r=d&&{name:[NAME[x],NAME[y]],legs:d}}
+  if(!r){
+    out.innerHTML=`<div class="none"><p><b>Trasu ${esc(A.value||'?')} – ${esc(B.value||'?')} jsme nenašli.</b> Zkuste název stanice nebo města jinak, nebo hledejte tady:</p><div class="buy">${btns([['Omio','https://www.omio.com'],['Trainline','https://www.trainline.com'],['FlixBus','https://www.flixbus.cz']])}</div></div>`;
+    return;
+  }
+  const legs=r.legs,total=legs.reduce((s,l)=>s+l.min,0),stn=[legs[0].f,...legs.map(l=>l.t)];
+  let h=`<p class="sum">${esc(r.name[0])} → ${esc(r.name[1])}<span>celkem ${dur(total)}, ${legs.length===1?'1 úsek':legs.length+' úseky'}</span></p><ol class="tl"><li class="stn">${esc(stn[0])}</li>`;
+  legs.forEach((l,i)=>{const m=M[l.m];
+    h+=`<li class="leg" style="--c:${m.c}"><div class="card"><div class="top"><span class="bd">${m.i} ${m.n}</span><span class="dur">${dur(l.min)}</span></div><p class="ln">${esc(l.ln)}</p>${l.plat?`<span class="plat">Nástupiště: ${esc(l.plat)}</span>`:''}${l.tip?`<p class="tip">${esc(l.tip)}</p>`:''}${l.buy.length?`<div class="buy">${btns(l.buy)}</div>`:''}</div></li><li class="stn">${esc(stn[i+1])}</li>`;});
+  out.innerHTML=h+'</ol>';
+}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();go()});
+document.getElementById('sw').addEventListener('click',()=>{[A.value,B.value]=[B.value,A.value];go()});
+const ex=document.getElementById('ex');
+[['Praha','Vídeň'],['Praha','Berlín'],['Vídeň','Budapešť'],['Praha','Mnichov']].forEach(([p,q])=>{
+  const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=p+' → '+q;
+  b.onclick=()=>{A.value=p;B.value=q;go()};ex.appendChild(b);
+});
+go();
+</script>
+</body>
+</html>
